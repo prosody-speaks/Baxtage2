@@ -1,9 +1,15 @@
 {% extends "base.html" %}
-
 {% block content %}
-  {% for act in performance.acts.all %}
-    <h1>{{ act.name }}</h1>
-   {% endfor %}
-  <!-- Add more details about the performance here -->
-{% endblock %}
 
+
+    <div class="container text-center">
+        <div class="row">
+            <div class="col">
+                {% for act in performance.acts.all %}
+                    <h1>{{ act.name }}</h1>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
