@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'lineup.apps.LineupConfig',
-    'django_select2'
+    'manager.apps.ImporterConfig',
+    'django_select2',
 ]
 
 MIDDLEWARE = [
