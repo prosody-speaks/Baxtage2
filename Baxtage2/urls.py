@@ -19,7 +19,8 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('lineup/', include('lineup.urls', namespace='lineup')),
+    path('', include('lineup.urls', namespace='lineup')),
+    path('producer/', include('producer.urls', namespace='producer')),
     path('select2/', include('django_select2.urls')),
 
 ]

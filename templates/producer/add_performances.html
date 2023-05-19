@@ -1,0 +1,79 @@
+{#{% extends "base.html" %}#}
+{#{% block content %}#}
+{##}
+{##}
+{#    <div class="container text-center">#}
+{#        <div class="row">#}
+{#            <div class="col col-3">#}
+{#                <p class="">ACT</p>#}
+{#            </div>#}
+{#            <div class="col col-3">#}
+{#                <p class="">Start</p>#}
+{#            </div>#}
+{#            <div class="col col-3">#}
+{#                <p class="">Finish</p>#}
+{#            </div>#}
+{#            <div class="col col-3">#}
+{#                <p class="">Contact</p>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="row">#}
+{#            <div class="col col4">#}
+{#                <div class="btn btn-primary">ADD</div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#{% endblock %}#}
+
+
+{% extends 'base.html' %}
+
+{% block title %}Add Performances{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Add Performances</h1>
+    <form id="performanceForm" method="post">
+        {% csrf_token %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Act</th>
+                <th scope="col">Start Time</th>
+                <th scope="col">End Time</th>
+                <th scope="col">Contact Name</th>
+            </tr>
+            </thead>
+            <tbody id="performanceTableBody">
+            <!-- Django form set will go here -->
+            </tbody>
+        </table>
+        <button type="button" id="addPerformance" class="btn btn-primary">Add Performance</button>
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+</div>
+
+<!-- Template for new form rows -->
+<script id="form-template" type="text/template">
+    <tr>
+        <td><input type="text" name="act-{0}" class="form-control" required /></td>
+        <td><input type="time" name="start_time-{0}" class="form-control" required /></td>
+        <td><input type="time" name="end_time-{0}" class="form-control" required /></td>
+        <td><input type="text" name="contact_name-{0}" class="form-control" required /></td>
+    </tr>
+</script>
+
+<!-- JavaScript to add new forms -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        let formCount = 0;
+
+        $('#addPerformance').click(function() {
+            const formTemplate = $('#form-template').html();
+            const form = formTemplate.replace(/{0}/g, formCount);
+            $('#performanceTableBody').append(form);
+            formCount++;
+        });
+    });
+</script>
+{% endblock %}
