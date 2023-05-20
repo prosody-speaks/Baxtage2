@@ -1,79 +1,109 @@
-{#{% extends "base.html" %}#}
+{#{% extends 'base.html' %}#}
+{##}
+{#{% block title %}Add Performances{% endblock %}#}
+{##}
 {#{% block content %}#}
-{##}
-{##}
-{#    <div class="container text-center">#}
-{#        <div class="row">#}
-{#            <div class="col col-3">#}
-{#                <p class="">ACT</p>#}
-{#            </div>#}
-{#            <div class="col col-3">#}
-{#                <p class="">Start</p>#}
-{#            </div>#}
-{#            <div class="col col-3">#}
-{#                <p class="">Finish</p>#}
-{#            </div>#}
-{#            <div class="col col-3">#}
-{#                <p class="">Contact</p>#}
-{#            </div>#}
-{#        </div>#}
-{#        <div class="row">#}
-{#            <div class="col col4">#}
-{#                <div class="btn btn-primary">ADD</div>#}
-{#            </div>#}
-{#        </div>#}
+{#    <div class="container mt-5">#}
+{#        <h1>Add Performances</h1>#}
+{#        <form id="performanceForm" method="post">#}
+{#            {% csrf_token %}#}
+{#            <table class="table">#}
+{#                <thead>#}
+{#                <tr>#}
+{#                    <th scope="col">Act</th>#}
+{#                    <th scope="col">Start Time</th>#}
+{#                    <th scope="col">End Time</th>#}
+{#                    <th scope="col">Contact Name</th>#}
+{#                </tr>#}
+{#                </thead>#}
+{#                <tbody>#}
+{#                {{ formset.management_form }}#}
+{#                {% for form in formset %}#}
+{#                    <tr class="tr">#}
+{#                        <input type="text" class="form-control" placeholder="Act Name">#}
+{#                        <input type="time" class="form-control">#}
+{#                    </tr>#}
+{#                {% endfor %}#}
+{#                </tbody>#}
+{#            </table>#}
+{#            <input type="submit" value="Submit" class="btn btn-success">#}
+{#            <button type="button" id="addPerformance" class="btn btn-primary">Add Performance</button>#}
+{#        </form>#}
 {#    </div>#}
 {#{% endblock %}#}
-
+{##}
+{#{% block scripts %}#}
+{#    <script>#}
+{#        $(document).ready(function() {#}
+{#            $('#addPerformance').click(function () {#}
+{#                console.log('clicked');#}
+{#                let newElement = $('#performanceForm tbody tr:first').clone(true);#}
+{#                let total = $('#id_form-TOTAL_FORMS');#}
+{#                newElement.find(':input').each(function () {#}
+{#                    let name = $(this).attr('name').replace('-0-', '-' + total.val() + '-');#}
+{#                    let id = 'id_' + name;#}
+{#                    $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');#}
+{#                });#}
+{#                total.val(parseInt(total.val(), 10) + 1);#}
+{#                $('#performanceForm tbody').append(newElement);#}
+{#            });#}
+{#        });#}
+{##}
+{#    </script>#}
+{#{% endblock scripts %}#}
 
 {% extends 'base.html' %}
 
 {% block title %}Add Performances{% endblock %}
 
+
 {% block content %}
-<div class="container mt-5">
-    <h1>Add Performances</h1>
-    <form id="performanceForm" method="post">
-        {% csrf_token %}
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">Act</th>
-                <th scope="col">Start Time</th>
-                <th scope="col">End Time</th>
-                <th scope="col">Contact Name</th>
-            </tr>
-            </thead>
-            <tbody id="performanceTableBody">
-            <!-- Django form set will go here -->
-            </tbody>
-        </table>
-        <button type="button" id="addPerformance" class="btn btn-primary">Add Performance</button>
-        <button type="submit" class="btn btn-success">Submit</button>
-    </form>
-</div>
+    <div class="container mt-5">
+        <h1>Add Performances</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ formset.management_form }}
+            <div class="row mb-3">
+                <div class="col">Act</div>
+                <div class="col">Start Time</div>
+                <div class="col">End Time</div>
+                <div class="col">Contact Name</div>
+            </div>
+            {% for form in formset %}
+                <div class="row px-0 mx-0 mb-3">
+                    <div class="col col-4">
+                        {{ form.act }}
+                    </div>
+                    <div class="col col-1">
+                        {{ form.start_time }}
+                    </div>
+                    <div class="col col-1">
+                        {{ form.end_time }}
+                    </div>
+                    <div class="col col-4">
+                        {{ form.contact_name }}
+                    </div>
+                </div>
+            {% endfor %}
+            <input type="submit" value="Submit" class="btn btn-success">
+        </form>
+        <button id="addPerformance" class="btn btn-primary mt-3">Add Performance</button>
+    </div>
+{% endblock %}
 
-<!-- Template for new form rows -->
-<script id="form-template" type="text/template">
-    <tr>
-        <td><input type="text" name="act-{0}" class="form-control" required /></td>
-        <td><input type="time" name="start_time-{0}" class="form-control" required /></td>
-        <td><input type="time" name="end_time-{0}" class="form-control" required /></td>
-        <td><input type="text" name="contact_name-{0}" class="form-control" required /></td>
-    </tr>
-</script>
 
-<!-- JavaScript to add new forms -->
-<script type="text/javascript">
-    $(document).ready(function() {
-        let formCount = 0;
 
-        $('#addPerformance').click(function() {
-            const formTemplate = $('#form-template').html();
-            const form = formTemplate.replace(/{0}/g, formCount);
-            $('#performanceTableBody').append(form);
-            formCount++;
+
+
+{% block scripts %}
+    {#<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.formset/1.2.2/jquery.formset.min.js"></script>#}
+    <script type="text/javascript">
+        $(function () {
+            $('form').formset({
+                addText: 'Add Performance',
+                deleteText: 'Remove',
+                prefix: 'formset'
+            });
         });
-    });
-</script>
+    </script>
 {% endblock %}

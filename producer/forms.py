@@ -1,16 +1,21 @@
 from django import forms
-from django_select2.forms import ModelSelect2MultipleWidget
+from django.forms import TimeInput
 
-from lineup.models import Act, Performance
+from producer.models import Performance
+
 
 class PerformanceForm(forms.ModelForm):
     class Meta:
         model = Performance
-        fields = ['act', 'show', 'start_time']
+        fields = ['act', 'start_time', 'end_time', 'contact_name']
         widgets = {
-            'start_time': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+            'start_time': TimeInput(attrs={'type': 'time'}),
+            'end_time': TimeInput(attrs={'type': 'time'}),
         }
-#
+
+PerformanceFormSet = forms.formset_factory(PerformanceForm, extra=1)
+
+
 # class PerformanceForm(forms.ModelForm):
 #
 #     acts = forms.ModelMultipleChoiceField(

@@ -1,7 +1,5 @@
 from django.db import models
 
-from lineup.people import Act
-
 
 class Show(models.Model):
     name = models.CharField(max_length=100)

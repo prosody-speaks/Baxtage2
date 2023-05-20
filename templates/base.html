@@ -46,7 +46,6 @@
     </div>
 </nav>
 
-{#template to be replaced#}
 <div id="content">{% block content %} {% endblock %}</div>
 
 
@@ -60,6 +59,9 @@
         crossorigin="anonymous"></script>
 <!-- Select2 -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+{# custom per page #}
+{% block scripts %}{% endblock %}
+
 </body>
 
 </html>

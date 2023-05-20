@@ -1,9 +1,9 @@
 from django.contrib import admin
 
-from lineup.gear import ActTechRider, Instrument, Microphone
-from lineup.models import Performance
-from lineup.people import Act, Person, Role
-from lineup.show import Show
+from producer.gear import ActTechRider, Instrument, Microphone
+from producer.models import Performance
+from producer.people import Act, Person, Role
+from producer.show import Show
 
 
 @admin.register(Person, Role)

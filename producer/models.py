@@ -4,23 +4,16 @@ from django.dispatch import receiver
 from django.urls import reverse
 from django.utils.text import slugify
 
-from lineup.gear import ActTechRider, Instrument
-from lineup.people import Act
-from lineup.show import Show
-
-
-
-
-
 
 class Performance(models.Model):
     # acts = models.ManyToManyField(Act, related_name='performances')
     # show = models.ForeignKey(Show, on_delete=models.CASCADE, related_name='performances')
     # tech_spec = models.OneToOneField(TechSpec, on_delete=models.PROTECT, related_name='performance')
     act = models.CharField(max_length=100)
-    slug = models.SlugField()
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
+    contact_name = models.CharField(max_length=100)
+    slug = models.SlugField()
     #
     # @property
     # def name(self):

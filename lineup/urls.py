@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from django.urls import path
-from .views import PerformanceCreateView, PerformanceListView, PerformanceDetailView
+from .views import PerformanceListView, PerformanceDetailView
 
 #
 # urlpatterns = [
@@ -14,6 +14,5 @@ app_name = 'lineup'
 
 urlpatterns = [
     path('', PerformanceListView.as_view(), name='performance_list'),
-    path('new', PerformanceCreateView.as_view(), name='performance_new'),
     path('<slug:slug>/', PerformanceDetailView.as_view(), name='performance_detail'),
 ]

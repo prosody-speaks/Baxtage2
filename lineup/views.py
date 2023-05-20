@@ -1,14 +1,8 @@
-from django.views.generic import CreateView, DetailView, ListView
+from django.views.generic import DetailView, ListView
 
-from lineup.forms import PerformanceForm
-from lineup.models import Performance
+from producer.models import Performance
 
 
-class PerformanceCreateView(CreateView):
-    model = Performance
-    form_class = PerformanceForm
-    template_name = 'lineup/performance_form.html'
-    success_url = '/lineup/'
 
 
 class PerformanceListView(ListView):
